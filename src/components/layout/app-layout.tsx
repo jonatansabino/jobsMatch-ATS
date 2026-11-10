@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { ChevronRight, Menu, Plus } from "lucide-react";
 import { navigation } from "@/app/navigation";
@@ -11,6 +11,7 @@ import {
   SheetDescription,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { Skeleton } from "@/components/ui/skeleton";
 import { ThemeMenu } from "@/components/shared/theme-menu";
 
 export function AppLayout() {
@@ -94,11 +95,17 @@ export function AppLayout() {
           tabIndex={-1}
           className="mx-auto max-w-[1500px] px-4 py-7 focus-visible:outline-none sm:px-8 sm:py-9 lg:px-9"
         >
-          <Outlet />
+          <Suspense
+            fallback={
+              <Skeleton className="h-64" aria-label="Carregando página" />
+            }
+          >
+            <Outlet />
+          </Suspense>
         </main>
         <footer className="mx-4 flex flex-wrap justify-between gap-2 border-t py-5 text-[11px] text-muted-foreground sm:mx-8 lg:mx-9">
           <span>JobMatch ATS · Seu próximo passo profissional.</span>
-          <span>Etapa 1 · Estrutura e design system</span>
+          <span>Dados locais · Currículos e versões</span>
         </footer>
       </div>
     </div>

@@ -77,7 +77,8 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
             Seu espaço é privado
           </div>
           <p className="text-[11px] leading-relaxed text-muted-foreground">
-            Sem conta, sem servidor. Suas preferências ficam neste navegador.
+            Sem conta, sem servidor. Seus currículos e preferências ficam neste
+            navegador.
           </p>
           <Link
             to="/configuracoes"

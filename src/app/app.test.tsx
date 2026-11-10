@@ -1,26 +1,28 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MemoryRouter } from "react-router-dom";
+import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import { App } from "./app";
 import { navigation } from "./navigation";
 import { useTheme } from "@/hooks/use-theme";
 
 function renderPage(path = "/") {
   return render(
-    <MemoryRouter initialEntries={[path]}>
-      <App />
-    </MemoryRouter>,
+    <RouterProvider
+      router={createMemoryRouter([{ path: "*", element: <App /> }], {
+        initialEntries: [path],
+      })}
+    />,
   );
 }
 beforeEach(() => {
   localStorage.clear();
   useTheme.setState({ theme: "system" });
 });
-describe("Estrutura da Etapa 1", () => {
-  it.each(navigation)("abre $label", ({ path, label }) => {
+describe("Navegação e tema", () => {
+  it.each(navigation)("abre $label", async ({ path, label }) => {
     renderPage(path);
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+    expect(await screen.findByRole("heading", { level: 1 })).toHaveTextContent(
       path === "/" ? "Sua próxima oportunidade começa aqui." : label,
     );
     expect(screen.getByRole("link", { name: label })).toHaveAttribute(
@@ -28,16 +30,20 @@ describe("Estrutura da Etapa 1", () => {
       "page",
     );
   });
-  it("navega para currículos sem oferecer criação indisponível", async () => {
+  it("navega para currículos com criação disponível", async () => {
     const user = userEvent.setup();
     renderPage();
-    await user.click(screen.getByRole("link", { name: "Ver meus currículos" }));
+    await user.click(
+      await screen.findByRole("link", { name: "Ver meus currículos" }),
+    );
     expect(
       screen.getByRole("heading", { level: 1, name: "Meus Currículos" }),
     ).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: "Novo currículo" }),
-    ).toBeDisabled();
+    await waitFor(() =>
+      expect(
+        screen.getByRole("button", { name: "Novo currículo" }),
+      ).toBeEnabled(),
+    );
     expect(document.title).toBe("Meus Currículos | JobMatch ATS");
   });
   it("aplica e persiste a preferência de tema", async () => {
@@ -74,7 +80,7 @@ describe("Estrutura da Etapa 1", () => {
       screen.getByRole("heading", { name: "Esta página não foi encontrada." }),
     ).toBeInTheDocument();
     await user.click(screen.getByRole("link", { name: "Voltar ao dashboard" }));
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+    expect(await screen.findByRole("heading", { level: 1 })).toHaveTextContent(
       "Sua próxima oportunidade começa aqui.",
     );
   });

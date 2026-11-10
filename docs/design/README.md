@@ -12,7 +12,7 @@
 - Componentes marcantes: navegação ativa em índigo, banner com documento, indicadores com ícones e roteiro numerado.
 - Movimento discreto em hover e transições de controles, respeitando movimento reduzido.
 
-O texto da referência foi ajustado para deixar claro o escopo da Etapa 1. A implementação não repete alegações de criptografia da imagem e não apresenta recursos futuros como prontos. Indicadores usam travessões; nenhum dado de usuário ou demonstração é carregado.
+O texto da referência foi ajustado para deixar claro o escopo da Etapa 1. A implementação não repete alegações de criptografia da imagem e não apresenta recursos futuros como prontos. A referência retrata a estrutura inicial. No produto atual, o total de currículos vem do IndexedDB; os indicadores ainda indisponíveis continuam com travessões. Nenhum dado demonstrativo é carregado automaticamente.
 
 ## Prompt da referência
 

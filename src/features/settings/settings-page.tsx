@@ -62,10 +62,10 @@ export function SettingsPage() {
                 Privacidade por princípio
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                Sem login, serviços de IA ou envio de documentos. Nesta etapa,
-                apenas a preferência de tema é armazenada. A persistência de
-                currículos e análises será implementada com IndexedDB na Etapa
-                2.
+                Sem login, serviços de IA ou envio de documentos. Seus
+                currículos e versões ficam no IndexedDB deste navegador; a
+                preferência de tema fica no LocalStorage. Limpar os dados do
+                site ou usar outro navegador não preserva esses registros.
               </p>
             </CardContent>
           </Card>
@@ -90,13 +90,14 @@ export function SettingsPage() {
                 <h2 className="text-sm font-semibold">Gerenciar dados</h2>
               </div>
               <Badge variant="secondary" className="font-normal">
-                Disponível na Etapa 9
+                Disponível em etapa futura
               </Badge>
             </div>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              Backup JSON, restauração, demonstração e limpeza de dados serão
-              disponibilizados após a implementação da persistência. Nenhum
-              documento está sendo armazenado nesta etapa.
+              Backup JSON, importação, demonstração e limpeza permanente serão
+              implementados em uma etapa futura. A exclusão de currículos é
+              reversível pela lixeira em Meus Currículos. O histórico permite
+              restaurar versões anteriores.
             </p>
           </CardContent>
         </Card>

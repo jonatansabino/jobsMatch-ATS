@@ -15,6 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useResumes } from "@/hooks/use-resumes";
 import { PageHeading } from "@/components/shared/page-heading";
 
 const metrics = [
@@ -57,6 +58,11 @@ const steps = [
   },
 ];
 export function DashboardPage() {
+  const { resumes, loading, error } = useResumes();
+  const total =
+    loading || error
+      ? "—"
+      : resumes.filter((resume) => !resume.deletedAt).length;
   return (
     <>
       <PageHeading
@@ -116,9 +122,13 @@ export function DashboardPage() {
                 </h2>
                 <p
                   className="my-1 text-2xl font-semibold leading-none"
-                  aria-label="Ainda indisponível"
+                  aria-label={
+                    label === "Currículos"
+                      ? "Total de currículos ativos"
+                      : "Ainda indisponível"
+                  }
                 >
-                  —
+                  {label === "Currículos" ? total : "—"}
                 </p>
                 <p className="text-[10px] text-muted-foreground">
                   {description}
@@ -138,7 +148,7 @@ export function DashboardPage() {
               </p>
             </div>
             <Badge variant="secondary" className="text-[10px] font-normal">
-              Em breve · Etapa 2
+              Em breve
             </Badge>
           </div>
           <CardContent className="flex min-h-72 flex-col items-center justify-center p-6 text-center">
@@ -217,7 +227,7 @@ export function DashboardPage() {
         </span>
         <span className="flex items-center gap-1.5">
           <Clock3 className="size-3.5 shrink-0" />
-          Indicadores disponíveis com a persistência na Etapa 2.
+          Total de currículos salvo localmente. Demais indicadores em breve.
         </span>
       </div>
     </>
